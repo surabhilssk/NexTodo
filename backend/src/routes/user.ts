@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
+import { signinSchema, signupSchema, updateUserSchema } from "@surabhilssk/project-mache";
 import { Hono } from "hono";
 import { sign, verify, jwt } from "hono/jwt"
 
@@ -35,6 +36,15 @@ userRouter.post('/signup', async (c) => {
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
     const body = await c.req.json();
+
+    const { success } = signupSchema.safeParse(body);
+
+    if(!success){
+        return c.json({
+            error: "Invalid Input"
+        });
+    }
+
     try{
         const user = await prisma.user.create({
             data: {
@@ -46,13 +56,12 @@ userRouter.post('/signup', async (c) => {
         const token = await sign({id: user.id}, c.env.JWT_SECRET);
         return c.json({
             jwt: token
-        })
+        });
     }catch(e: any){
         console.log(e);
         c.status(403);
         return c.json({
             error: "Unable to signup / Email already used",
-            main : e.message
         });
     }
 });
@@ -63,6 +72,15 @@ userRouter.post('/signin', async (c) => {
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
     const body = await c.req.json();
+
+    const { success } = signinSchema.safeParse(body);
+
+    if(!success){
+        return c.json({
+            error: "Invalid Input"
+        });
+    }
+
     try{
         const user = await prisma.user.findFirst({
             where: {
@@ -72,12 +90,12 @@ userRouter.post('/signin', async (c) => {
         const jwt = await sign({ id: user?.id }, c.env.JWT_SECRET);
         return c.json({
             jwt: jwt
-        })
+        });
     }catch(e){
         c.status(403);
         c.json({
             error: "User not found!"
-        })
+        });
     }
 });
 
@@ -87,6 +105,15 @@ userRouter.put("/update", async (c) => {
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate());
     const body = await c.req.json();
+
+    const { success } = updateUserSchema.safeParse(body);
+
+    if(!success){
+        return c.json({
+            error: "Invalid Input"
+        });
+    }
+
     const userId = c.get("userId");
     try{
         const user = await prisma.user.update({
@@ -104,7 +131,7 @@ userRouter.put("/update", async (c) => {
     }catch(e){
         c.status(403);
         c.json({
-            error: "Unable to update user"
-        })
+            error: "Unable to update user details"
+        });
     }
-})
+});

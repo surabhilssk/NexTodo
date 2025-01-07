@@ -1,11 +1,17 @@
-import "./App.css";
-import { BackgroundGradientAnimation } from "./components/ui/background-gradient-animation";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Signup } from "./pages/Signup";
+import { Signin } from "./pages/Signin";
+import { Tasks } from "./pages/Tasks";
 
 function App() {
   return (
-    <div>
-      <BackgroundGradientAnimation />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/Signin" element={<Signin />} />
+        <Route path="/tasks" element={<Tasks />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

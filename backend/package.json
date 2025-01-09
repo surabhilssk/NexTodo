@@ -7,7 +7,7 @@
   "dependencies": {
     "@prisma/client": "^6.1.0",
     "@prisma/extension-accelerate": "^1.2.1",
-    "@surabhilssk/project-mache": "^1.0.0",
+    "@surabhilssk/project-mache": "^2.1.0",
     "cors": "^2.8.5",
     "hono": "^4.6.15",
     "prisma": "^6.1.0"

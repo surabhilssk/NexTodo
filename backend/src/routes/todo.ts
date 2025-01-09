@@ -118,6 +118,7 @@ todoRouter.put("/:id", async (c) => {
         data: {
             title: body.title || undefined,
             description: body.description || undefined,
+            completed: body.completed || false,
         }
     });
 

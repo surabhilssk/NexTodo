@@ -1,3 +1,22 @@
+import { TaskList } from "../components/TaskList";
+import { useTasks } from "../hooks";
 export const Tasks = () => {
-  return <div>Tasks here</div>;
+  const { loading, tasks } = useTasks();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      {tasks.map(function (task) {
+        return (
+          <TaskList
+            title={task.title}
+            isCompleted={task.completed}
+            id={task.id}
+          />
+        );
+      })}
+    </div>
+  );
 };

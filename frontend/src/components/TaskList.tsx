@@ -1,20 +1,29 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BACKEND_URL } from "../../config";
-import { data } from "react-router-dom";
+import { TaskModal } from "./ui/TaskModal";
 
 interface TaskListProps {
   title: string;
   isCompleted: boolean;
   id: string;
+  modalTitle: string;
+  modalDescription: string;
 }
-export const TaskList = ({ title, isCompleted, id }: TaskListProps) => {
+export const TaskList = ({
+  title,
+  isCompleted,
+  id,
+  modalTitle,
+  modalDescription,
+}: TaskListProps) => {
   const [isChecked, setIsChecked] = useState(isCompleted);
+  const [open, setOpen] = useState(false);
 
-  const handleCheckboxChange = () => {
+  const handleCheckboxChange = async () => {
     setIsChecked(!isChecked);
     const newComplete = !isCompleted;
-    axios.put(
+    await axios.put(
       `${BACKEND_URL}/api/v1/todos/${id}`,
       {
         completed: newComplete,
@@ -53,7 +62,12 @@ export const TaskList = ({ title, isCompleted, id }: TaskListProps) => {
                   </svg>
                 </span>
               </label>
-              <label className="cursor-pointer ml-3 text-slate-600 text-sm">
+              <label
+                className="cursor-pointer ml-3 text-slate-600 text-sm bg-red-500"
+                onClick={() => {
+                  setOpen(!open);
+                }}
+              >
                 <div
                   className={`font-normal text-sm ${
                     isChecked === true ? "line-through" : null
@@ -73,6 +87,12 @@ export const TaskList = ({ title, isCompleted, id }: TaskListProps) => {
           </label>
         </div>
       </nav>
+      <TaskModal
+        open={open}
+        setOpen={setOpen}
+        modalTitle={modalTitle}
+        modalDescription={modalDescription}
+      />
     </div>
   );
 };

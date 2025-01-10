@@ -14,19 +14,21 @@ export const useTasks = () => {
     const [tasks, setTasks] = useState<TasksProps[]>([]);
 
     useEffect(()=>{
-        axios.get(`${BACKEND_URL}/api/v1/todos/bulk`,{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-        }).then((response)=>{
-            setTasks(response.data.todos);
-            setLoading(false);
-        })
-    },[])
-
+        const fetchTasks = () => {
+            axios.get(`${BACKEND_URL}/api/v1/todos/bulk`,{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            }).then((response)=>{
+                setTasks(response.data.todos);
+                setLoading(false);
+            })
+        }
+        fetchTasks();
+        const intervalId = setInterval(fetchTasks, 10000);
+        return () => clearInterval(intervalId);
+    },[]);
     return {
         loading,
         tasks,
-    }
-
-}
+    }}

@@ -4,16 +4,22 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import {
-  ClipboardDocumentCheckIcon,
-  TrashIcon,
-} from "@heroicons/react/24/outline";
+import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = date.getUTCFullYear();
+  return `${day}/${month}/${year}`;
+}
 
 interface TaskModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   modalTitle: string;
   modalDescription: string;
+  modalCreatedDate: string;
 }
 
 export const TaskModal = ({
@@ -21,7 +27,9 @@ export const TaskModal = ({
   setOpen,
   modalTitle,
   modalDescription,
+  modalCreatedDate,
 }: TaskModalProps) => {
+  const formattedDate = formatDate(modalCreatedDate);
   return (
     <Dialog open={open} onClose={setOpen} className="relative z-10">
       <DialogBackdrop
@@ -53,19 +61,27 @@ export const TaskModal = ({
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">{modalDescription}</p>
                   </div>
+                  <div className="flex gap-1">
+                    <div className="mt-3 border w-fit px-3 py-1 rounded-full bg-slate-200">
+                      <div className="text-xs text-slate-600">
+                        {formattedDate}
+                      </div>
+                    </div>
+                    <div className="mt-3 border w-fit px-3 py-1 rounded-full bg-slate-200">
+                      <div className="text-xs text-slate-600">Tomorrow</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button
                 type="button"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                }}
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
               >
-                <TrashIcon
-                  aria-hidden="true"
-                  className="size-4 font-extrabold"
-                />
                 Delete
               </button>
               <button

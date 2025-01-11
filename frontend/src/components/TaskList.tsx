@@ -9,6 +9,7 @@ interface TaskListProps {
   id: string;
   modalTitle: string;
   modalDescription: string;
+  modalCreatedAt: string;
 }
 export const TaskList = ({
   title,
@@ -16,6 +17,7 @@ export const TaskList = ({
   id,
   modalTitle,
   modalDescription,
+  modalCreatedAt,
 }: TaskListProps) => {
   const [isChecked, setIsChecked] = useState(isCompleted);
   const [open, setOpen] = useState(false);
@@ -63,7 +65,7 @@ export const TaskList = ({
                 </span>
               </label>
               <label
-                className="cursor-pointer ml-3 text-slate-600 text-sm bg-red-500"
+                className="cursor-pointer ml-3 text-slate-600 text-sm"
                 onClick={() => {
                   setOpen(!open);
                 }}
@@ -92,6 +94,7 @@ export const TaskList = ({
         setOpen={setOpen}
         modalTitle={modalTitle}
         modalDescription={modalDescription}
+        modalCreatedDate={modalCreatedAt}
       />
     </div>
   );

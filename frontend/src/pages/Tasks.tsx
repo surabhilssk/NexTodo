@@ -18,6 +18,7 @@ export const Tasks = () => {
               id={task.id}
               modalTitle={task.title}
               modalDescription={task.description}
+              modalCreatedAt={task.createdAt}
             />
           );
         })}

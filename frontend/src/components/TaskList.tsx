@@ -95,6 +95,7 @@ export const TaskList = ({
         modalTitle={modalTitle}
         modalDescription={modalDescription}
         modalCreatedDate={modalCreatedAt}
+        taskId={id}
       />
     </div>
   );

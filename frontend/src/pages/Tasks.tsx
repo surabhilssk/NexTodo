@@ -11,7 +11,7 @@ export const Tasks = () => {
     <div>
       <div>
         {tasks.map(function (task) {
-          return (
+          return task.id === null ? null : (
             <TaskList
               title={task.title}
               isCompleted={task.completed}

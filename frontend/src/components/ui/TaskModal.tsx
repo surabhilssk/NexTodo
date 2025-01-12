@@ -5,6 +5,8 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { ClipboardDocumentCheckIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import { BACKEND_URL } from "../../../config";
 
 function formatDate(dateString: string) {
   const date = new Date(dateString);
@@ -14,12 +16,26 @@ function formatDate(dateString: string) {
   return `${day}/${month}/${year}`;
 }
 
+let loading = false;
+
+const deleteTask = async (taskId: string) => {
+  loading = true;
+  const response = await axios.delete(`${BACKEND_URL}/api/v1/todos/${taskId}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  loading = false;
+  return response;
+};
+
 interface TaskModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   modalTitle: string;
   modalDescription: string;
   modalCreatedDate: string;
+  taskId: string;
 }
 
 export const TaskModal = ({
@@ -28,6 +44,7 @@ export const TaskModal = ({
   modalTitle,
   modalDescription,
   modalCreatedDate,
+  taskId,
 }: TaskModalProps) => {
   const formattedDate = formatDate(modalCreatedDate);
   return (
@@ -77,12 +94,13 @@ export const TaskModal = ({
             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button
                 type="button"
-                onClick={() => {
+                onClick={async () => {
+                  await deleteTask(taskId);
                   setOpen(false);
                 }}
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
               >
-                Delete
+                {loading === true ? "Deleting" : "Delete"}
               </button>
               <button
                 type="button"

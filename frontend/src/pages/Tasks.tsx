@@ -3,7 +3,7 @@ import { TaskList } from "../components/TaskList";
 import { useTasks } from "../hooks";
 
 export const Tasks = () => {
-  const { loading, tasks } = useTasks();
+  const { loading, tasks, fetchTasks } = useTasks();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -29,7 +29,7 @@ export const Tasks = () => {
             })}
           </div>
           <div className="fixed bottom-4 right-4">
-            <CreateTask />
+            <CreateTask fetchTasks={fetchTasks} />
           </div>
         </div>
       </div>

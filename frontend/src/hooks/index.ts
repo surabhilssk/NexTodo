@@ -15,6 +15,7 @@ export const useTasks = () => {
     const [tasks, setTasks] = useState<TasksProps[]>([]);
 
     const fetchTasks = () => {
+        console.log("fetch is called")
         axios.get(`${BACKEND_URL}/api/v1/todos/bulk`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -14,32 +14,30 @@ export const useTasks = () => {
     const [loading, setLoading] = useState(true);
     const [tasks, setTasks] = useState<TasksProps[]>([]);
 
+    const fetchTasks = () => {
+        axios.get(`${BACKEND_URL}/api/v1/todos/bulk`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        }).then((response) => {
+            // Sorting tasks by createdAt date
+            const sortedTasks = response.data.todos.sort((a: TasksProps, b: TasksProps) => 
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+            setTasks(sortedTasks);
+            setLoading(false);
+        }).catch(() => {
+            setLoading(false);
+        });
+    };
+
     useEffect(() => {
-        const fetchTasks = () => {
-            axios.get(`${BACKEND_URL}/api/v1/todos/bulk`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            }).then((response) => {
-                // Sorting tasks by createdAt date
-                const sortedTasks = response.data.todos.sort((a: TasksProps, b: TasksProps) => 
-                    new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
-                setTasks(sortedTasks);
-                setLoading(false);
-            }).catch(() => {
-                setLoading(false);
-            });
-        };
-
-        const intervalId = setInterval(fetchTasks, 10000);
         fetchTasks();
-
-        return () => clearInterval(intervalId);
     }, []);
 
     return {
         loading,
         tasks,
+        fetchTasks
     };
 };

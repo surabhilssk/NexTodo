@@ -12,6 +12,7 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
+    "@radix-ui/react-dialog": "^1.1.4",
     "@surabhilssk/project-mache": "^1.0.0",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
@@ -22,7 +23,9 @@
     "react-router-dom": "^7.1.1",
     "react-toastify": "^11.0.2",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwind-scrollbar-hide": "^2.0.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

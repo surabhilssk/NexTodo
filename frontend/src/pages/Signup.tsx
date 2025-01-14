@@ -24,8 +24,12 @@ export const Signup = () => {
         sighupData
       );
       const jwt = response.data.jwt;
-      localStorage.setItem("token", jwt);
-      navigate("/tasks");
+      if (jwt) {
+        localStorage.setItem("token", jwt);
+        navigate("/tasks");
+      } else {
+        throw new Error("JWT token is missing");
+      }
       setLoading(false);
     } catch (e) {
       toast.error("Error while signing up!", {

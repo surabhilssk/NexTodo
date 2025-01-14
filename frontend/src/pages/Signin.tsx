@@ -23,9 +23,13 @@ export const Signin = () => {
         signinData
       );
       const jwt = response.data.jwt;
-      localStorage.setItem("token", jwt);
+      if (jwt) {
+        localStorage.setItem("token", jwt);
+        navigate("/tasks");
+      } else {
+        throw new Error("JWT token is missing");
+      }
       setLoading(false);
-      navigate("/tasks");
     } catch (e) {
       toast.error("Error while signing in!", {
         position: "top-right",

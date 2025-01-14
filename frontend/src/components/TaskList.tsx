@@ -10,6 +10,7 @@ interface TaskListProps {
   modalTitle: string;
   modalDescription: string;
   modalCreatedAt: string;
+  fetchFunction: () => void;
 }
 export const TaskList = ({
   title,
@@ -18,6 +19,7 @@ export const TaskList = ({
   modalTitle,
   modalDescription,
   modalCreatedAt,
+  fetchFunction,
 }: TaskListProps) => {
   const [isChecked, setIsChecked] = useState(isCompleted);
   const [open, setOpen] = useState(false);
@@ -96,6 +98,7 @@ export const TaskList = ({
         modalDescription={modalDescription}
         modalCreatedDate={modalCreatedAt}
         taskId={id}
+        fetch={fetchFunction}
       />
     </div>
   );

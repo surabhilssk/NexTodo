@@ -32,7 +32,7 @@ export const CreateTask = ({ fetchTasks }: { fetchTasks: () => void }) => {
 
   const [taskData, setTaskData] = useState<TodoCreateType>({
     title: "",
-    description: "",
+    description: "Description not specified",
   });
   return (
     <div>

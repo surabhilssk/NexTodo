@@ -36,6 +36,7 @@ interface TaskModalProps {
   modalDescription: string;
   modalCreatedDate: string;
   taskId: string;
+  fetch: () => void;
 }
 
 export const TaskModal = ({
@@ -45,6 +46,7 @@ export const TaskModal = ({
   modalDescription,
   modalCreatedDate,
   taskId,
+  fetch,
 }: TaskModalProps) => {
   const formattedDate = formatDate(modalCreatedDate);
 
@@ -96,6 +98,7 @@ export const TaskModal = ({
                 type="button"
                 onClick={async () => {
                   await deleteTask(taskId);
+                  fetch();
                   setOpen(false);
                 }}
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"

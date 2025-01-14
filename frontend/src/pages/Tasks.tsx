@@ -1,6 +1,7 @@
 import { CreateTask } from "@/components/CreateTask";
 import { TaskList } from "../components/TaskList";
 import { useTasks } from "../hooks";
+import { AppBar } from "@/components/ui/AppBar";
 
 export const Tasks = () => {
   const { loading, tasks, fetchTasks } = useTasks();
@@ -11,7 +12,9 @@ export const Tasks = () => {
 
   return (
     <div className="bg-purple-50">
-      <div className="fixed">App Bar here</div>
+      <div className="fixed">
+        <AppBar />
+      </div>
       <div className="flex justify-center items-center h-screen">
         <div className="relative border-2 rounded-lg min-h-72 max-h-96 min-w-80 overflow-y-auto scrollbar-hide px-2 py-1 bg-white">
           <div>

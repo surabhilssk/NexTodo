@@ -11,7 +11,7 @@ export const AppBar = () => {
   return (
     <div className="flex justify-between w-screen bg-slate-900 py-4 px-4 rounded-b-lg">
       <div className="flex justify-center flex-col text-white font-extrabold">
-        NexTodo
+        NexTodo🎉
       </div>
       <div>
         <Button text="Logout" onClick={handleLogout} />
